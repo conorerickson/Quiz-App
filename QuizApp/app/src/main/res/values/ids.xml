@@ -4,4 +4,8 @@
     <item name="tvProgress" type="id" />
     <item name="progressBar" type="id" />
     <item name="ivImage" type="id" />
+    <item name="tvOptionOne" type="id" />
+    <item name="tvOptionTwo" type="id" />
+    <item name="tvOptionThree" type="id" />
+    <item name="tvOptionFour" type="id" />
 </resources>
