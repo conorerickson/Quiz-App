@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/Background"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/design_default_color_primary"
                 android:text="@string/btnStart"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />

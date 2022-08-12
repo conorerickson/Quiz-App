@@ -4,6 +4,6 @@
     <string name="welcome">Welcome</string>
     <string name="sub_title">Please enter your name.</string>
     <string name="name">Name</string>
-    <string name="name_hint">Name</string>
+    <string name="name_hint">e.g John</string>
     <string name="btnStart">Start</string>
 </resources>
