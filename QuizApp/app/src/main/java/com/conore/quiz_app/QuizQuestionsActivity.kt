@@ -5,15 +5,13 @@ import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
+
+    //TODO: Add results screen UI
 
     private var mCurrentPosition: Int = 1
     private var mQuestionsList: ArrayList<Question>? = null
@@ -60,10 +58,9 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setQuestion() {
 
-
         // Lots of duplication
 
-
+        defaultOptionsView()
         val question: Question = mQuestionsList!![mCurrentPosition - 1]
         ivImage?.setImageResource(question.image)
         progressBar?.progress = mCurrentPosition
@@ -83,6 +80,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onClick(view: View?) {
         when (view?.id) {
 
@@ -107,14 +105,70 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.btnSubmit -> {
-                // TODO "implement Submit button"
+                if(mSelectedOptionPosition == 0){
+                    mCurrentPosition++
+
+                    when{
+                        mCurrentPosition <= mQuestionsList!!.size ->{
+                            setQuestion()
+                        }
+                        else -> {
+                            Toast.makeText(this,"You have reached the end!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    val question = mQuestionsList?.get(mCurrentPosition - 1)
+                    if(question!!.correctAnswer != mSelectedOptionPosition) {
+                        answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
+                    }
+                    answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
+
+                    if(mCurrentPosition == mQuestionsList!!.size){
+                        btnSubmit?.text = "FINISH"
+                    } else {
+                        btnSubmit?.text = "GO TO NEXT QUESTION"
+                    }
+
+                    mSelectedOptionPosition = 0
+                }
             }
         }
     }
+
+    private fun answerView(answer: Int, drawableView: Int){
+        when (answer) {
+            1 -> {
+                tvOptionOne?.background = ContextCompat.getDrawable(
+                    this@QuizQuestionsActivity,
+                    drawableView
+                )
+            }
+            2 -> {
+                tvOptionTwo?.background = ContextCompat.getDrawable(
+                    this@QuizQuestionsActivity,
+                    drawableView
+                )
+            }
+            3 -> {
+                tvOptionThree?.background = ContextCompat.getDrawable(
+                    this@QuizQuestionsActivity,
+                    drawableView
+                )
+            }
+            4 -> {
+                tvOptionFour?.background = ContextCompat.getDrawable(
+                    this@QuizQuestionsActivity,
+                    drawableView
+                )
+            }
+        }
+    }
+
+
+
+
     private fun selectedOptionView(tv: TextView, selectedOptionNum: Int) {
-
         defaultOptionsView()
-
         mSelectedOptionPosition = selectedOptionNum
 
         tv.setTextColor(
@@ -126,8 +180,9 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             R.drawable.selected_option_border_bg
         )
     }
-    private fun defaultOptionsView() {
 
+
+    private fun defaultOptionsView() {
         val options = ArrayList<TextView>()
         tvOptionOne?.let {
             options.add(0, it)
